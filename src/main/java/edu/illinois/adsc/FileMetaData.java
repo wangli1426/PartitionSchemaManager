@@ -1,9 +1,11 @@
 package edu.illinois.adsc;
 
 /**
- * Created by robert on 23/11/16.
+ * This class contains the basic information of a chunk file.
+ * One can add as many new fields as needed.
  */
 public class FileMetaData {
+
     String filename;
     long startTime;
     long endTime;

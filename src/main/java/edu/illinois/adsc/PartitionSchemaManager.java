@@ -14,13 +14,18 @@ import java.util.Iterator;
  * Created by robert on 23/11/16.
  */
 public class PartitionSchemaManager {
+
+    // We relay on a R Tree implementation to store the fileMetaData
     private RTree<FileMetaData, Rectangle> tree = RTree.create();
 
+
+    // Add a FileMetaData to the manager
     public void add(FileMetaData fileMetaData) {
         tree = tree.add(fileMetaData, Geometries.rectangle(fileMetaData.keyRangeLowerBound, fileMetaData.startTime,
                 fileMetaData.keyRangeUpperBound, fileMetaData.endTime));
     }
 
+    // Retrieve the set of files for a given key range and time duration
     public ArrayList<FileMetaData> search(double keyRangeLowerBound, double keyRangeUpperBound, long startTime,
                                           long endTime) {
         ArrayList<FileMetaData> ret = new ArrayList<FileMetaData>();
@@ -35,10 +40,12 @@ public class PartitionSchemaManager {
         return ret;
     }
 
+    //Retrieve the set of files for a given key range
     public ArrayList<FileMetaData> keyRangedSearch(double keyRangeLowerBound, double keyRangeUpperBound) {
         return search(keyRangeLowerBound, keyRangeUpperBound, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
+    //Retrieve the set of files for a given time duration
     public ArrayList<FileMetaData> timeRangedSearch(long startTime, long endTime) {
         return search(Double.MIN_VALUE, Double.MAX_VALUE, startTime, endTime);
     }
