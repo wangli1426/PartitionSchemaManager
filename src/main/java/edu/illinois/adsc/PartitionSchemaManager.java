@@ -49,4 +49,13 @@ public class PartitionSchemaManager {
     public ArrayList<FileMetaData> timeRangedSearch(long startTime, long endTime) {
         return search(Double.MIN_VALUE, Double.MAX_VALUE, startTime, endTime);
     }
+
+    public static void main(String[] args) {
+        PartitionSchemaManager manager = new PartitionSchemaManager();
+        //We add a file whose name is filename, key range is 100 ~ 200, time is 50000 ~ 70000
+        manager.add(new FileMetaData("Filename", 100, 200, 50000, 70000));
+
+        //We retrieve the set of files who might have data falling in the given key range and time duration.
+        ArrayList<FileMetaData> files = manager.search(150, 160, 60000, 80000);
+    }
 }
